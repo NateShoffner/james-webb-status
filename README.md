@@ -1,0 +1,1 @@
+Basic web service that gets the current status of James Webb Space Telescope (JWST) during it's launch and deployment phases.
