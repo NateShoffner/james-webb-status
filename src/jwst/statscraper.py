@@ -4,12 +4,20 @@ from selenium import webdriver
 import selenium.webdriver.support.ui as ui
 from selenium.webdriver.chrome.options import Options
 
+NO_VALUE = '---'
+
+def decimalOrDefault(value):
+    try:
+        return Decimal(value)
+    except:
+        return NO_VALUE
+
 def toCelcius(temp):
     try:
         return (temp - 32) * 5 / 9
     except Exception as e:
         print(str(e))
-        return temp
+        return NO_VALUE
 
 def milestoKm(miles):
     try:
@@ -17,7 +25,7 @@ def milestoKm(miles):
         return Decimal(miles) * conv_factor
     except Exception as e:
         print(str(e))
-        return miles
+        return NO_VALUE
 
 class StatScraper:
 
@@ -71,32 +79,32 @@ class StatScraper:
 
         return {
                 'distanceFromEarth': {
-                    'miles': Decimal(milesFromEarth),
+                    'miles': decimalOrDefault(milesFromEarth),
                     'km': milestoKm(milesFromEarth)
                 },
                 'distanceToL2': {
-                    'miles': Decimal(milesToL2),
+                    'miles': decimalOrDefault(milesToL2),
                     'km': milestoKm(milesToL2)
                 },
-                'percentageCompleted': percentageCompleted,
+                'percentageCompleted': decimalOrDefault(percentageCompleted),
                 'cruisingSpeed': {
-                    'miles': Decimal(cruisingSpeed),
+                    'miles': decimalOrDefault(cruisingSpeed),
                     'km': milestoKm(cruisingSpeed)
                 },
                 'tempWarmSide1': {
-                    'F': tempWarmSide1F,
+                    'F': decimalOrDefault(tempWarmSide1F),
                     'C': toCelcius(tempWarmSide1F)
                 },
                 'tempWarmSide2': {
-                    'F': tempWarmSide2F,
+                    'F': decimalOrDefault(tempWarmSide2F),
                     'C': toCelcius(tempWarmSide2F)
                 },
                 'tempCoolSide1': {
-                    'F': tempCoolSide1F,
+                    'F': decimalOrDefault(tempCoolSide1F),
                     'C': toCelcius(tempCoolSide1F)
                 },
                 'tempCoolSide2': {
-                    'F': tempCoolSide2F,
+                    'F': decimalOrDefault(tempCoolSide2F),
                     'C': toCelcius(tempCoolSide2F)
                 }
         }        
